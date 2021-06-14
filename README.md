@@ -1,5 +1,5 @@
 # Ansys Scripting
-This scripts I wrote on my thesis works based on ANSYS Student 2020 R2.
+The scripts I wrote for my thesis works based on ANSYS Student 2020 R2.
 
 ## Programs
 
