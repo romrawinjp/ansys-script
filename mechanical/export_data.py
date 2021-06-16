@@ -61,6 +61,7 @@ for analysis in Model.Analyses:
                     stress_probe.append(str(Text))
         Step = intersperse(Step, ",")
         T = intersperse(T, ",")
+        print  "______" + result.Name +"_______"
         stress_probe = intersperse(stress_probe, ",")
         file = open("D:\\"+name+"\\" + result.Name +"\\stress_probe"+str(i)+".txt", "w")
         file.writelines(Step)
