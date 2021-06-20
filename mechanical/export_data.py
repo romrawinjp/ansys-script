@@ -71,6 +71,68 @@ for analysis in Model.Analyses:
         file.writelines(stress_probe)
         file.close()
         i+=1
+        
+for analysis in Model.Analyses:
+    Pane=ExtAPI.UserInterface.GetPane(MechanicalPanelEnum.TabularData)
+    Con = Pane.ControlUnknown
+    results = analysis.Solution.GetChildren(DataModelObjectCategory.StrainProbe, True)
+    i=1
+    for result in results:
+        path = os.path.join("Z:\\"+name, result.Name)
+        os.mkdir(path)
+        Step = []; stress_probe = []; T = []
+        for C in range(1,4):
+            for R in range(1,Con.RowsCount+1):
+                Text = Con.cell(R,C).Text
+                if C == 1:
+                    Step.append(str(Text))
+                elif C == 2:
+                    T.append(str(Text))
+                elif C ==3 :
+                    stress_probe.append(str(Text))
+        Step = intersperse(Step, ",")
+        T = intersperse(T, ",")
+        print  "______" + result.Name +"_______"
+        stress_probe = intersperse(stress_probe, ",")
+        file = open("Z:\\"+name+"\\" + result.Name +"\\"+str(result.Name)+".txt", "w")
+        file.writelines(Step)
+        file.write("\n")
+        file.writelines(T)
+        file.write("\n")
+        file.writelines(stress_probe)
+        file.close()
+        i+=1
+        
+for analysis in Model.Analyses:
+    Pane=ExtAPI.UserInterface.GetPane(MechanicalPanelEnum.TabularData)
+    Con = Pane.ControlUnknown
+    results = analysis.Solution.GetChildren(DataModelObjectCategory.ForceReaction, True)
+    i=1
+    for result in results:
+        path = os.path.join("Z:\\"+name, result.Name)
+        os.mkdir(path)
+        Step = []; stress_probe = []; T = []
+        for C in range(1,4):
+            for R in range(1,Con.RowsCount+1):
+                Text = Con.cell(R,C).Text
+                if C == 1:
+                    Step.append(str(Text))
+                elif C == 2:
+                    T.append(str(Text))
+                elif C ==3 :
+                    stress_probe.append(str(Text))
+        Step = intersperse(Step, ",")
+        T = intersperse(T, ",")
+        print  "______" + result.Name +"_______"
+        stress_probe = intersperse(stress_probe, ",")
+        file = open("Z:\\"+name+"\\" + result.Name +"\\"+str(result.Name)+".txt", "w")
+        file.writelines(Step)
+        file.write("\n")
+        file.writelines(T)
+        file.write("\n")
+        file.writelines(stress_probe)
+        file.close()
+        i+=1
   
 # Tabular Data
 finished_time = '0.001'
