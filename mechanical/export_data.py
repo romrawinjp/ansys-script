@@ -71,3 +71,35 @@ for analysis in Model.Analyses:
         file.writelines(stress_probe)
         file.close()
         i+=1
+  
+# Tabular Data
+finished_time = '0.001'
+solution = ExtAPI.DataModel.Project.Model.Analyses[0].Solution
+solution.Activate()
+Pane=ExtAPI.UserInterface.GetPane(MechanicalPanelEnum.TabularData)
+Con = Pane.ControlUnknown
+Step = []; T = []
+for C in range(1,3):
+    for R in range(1,Con.RowsCount+1):
+        Text = Con.cell(R,C).Text
+        if C == 1:
+            Step.append(str(Text))
+        elif C == 2:
+            T.append(str(Text))
+            
+print "User Defined Result"
+for analysis in Model.Analyses:
+    results = analysis.Solution.GetChildren(DataModelObjectCategory.UserDefinedResult, True)
+    for result in results:
+        print "_______" + result.Name + "_______"
+        path = os.path.join("D:\\"+name+"\\", result.Name)
+        os.mkdir(path)
+        for time_step in range(1, len(T)):
+            print result.Name, "______"+str(time_step)+"_______" 
+            if time_step == int(Step[-1]):
+                result.DisplayTime = Quantity(str(float(T[time_step])-0.0001e-05)+" [sec]")
+            else:
+                result.DisplayTime = Quantity(T[time_step]+" [sec]")
+            result.EvaluateAllResults()
+            result.ExportToTextFile("D:\\"+ name +"\\"+result.Name+"\\"+str(time_step)+".txt")
+
