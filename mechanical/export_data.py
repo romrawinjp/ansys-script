@@ -6,12 +6,12 @@ import os
 # analysis.Solve(True)
 
 #export data
-name = "MAL-9000-P1"
+name = "RUBBER-9000-P15V7500"
 path = os.path.join("Z:\\",name)
 os.mkdir(path)
 
 # Tabular Data
-finished_time = '0.001'
+finished_time = '0.0001'
 solution = ExtAPI.DataModel.Project.Model.Analyses[0].Solution
 solution.Activate()
 Pane=ExtAPI.UserInterface.GetPane(MechanicalPanelEnum.TabularData)
@@ -119,31 +119,46 @@ for analysis in Model.Analyses:
         result.Activate()
         path = os.path.join("Z:\\"+name, result.Name)
         os.mkdir(path)
-        Step = []; stress_probe = []; T = []
-        for C in range(1,4):
+        Step = []; linex = []; liney = []; linez = []; linet = []; T = []
+        for C in range(1,7):
             for R in range(1,Con.RowsCount+1):
                 Text = Con.cell(R,C).Text
                 if C == 1:
                     Step.append(str(Text))
                 elif C == 2:
                     T.append(str(Text))
-                elif C ==3 :
-                    stress_probe.append(str(Text))
+                elif C == 3 :
+                    linex.append(str(Text))
+                elif C == 4 :
+                    liney.append(str(Text))
+                elif C == 5 :
+                    linez.append(str(Text))
+                elif C == 6 :
+                    linet.append(str(Text))
         Step = intersperse(Step, ",")
         T = intersperse(T, ",")
         print  "______" + result.Name +"_______"
-        stress_probe = intersperse(stress_probe, ",")
+        linex = intersperse(linex, ",")
+        liney = intersperse(liney, ",")
+        linez = intersperse(linez, ",")
+        linet = intersperse(linet, ",")
         file = open("Z:\\"+name+"\\" + result.Name +"\\"+str(result.Name)+".txt", "w")
         file.writelines(Step)
         file.write("\n")
         file.writelines(T)
         file.write("\n")
-        file.writelines(stress_probe)
+        file.writelines(linex)
+        file.write("\n")
+        file.writelines(liney)
+        file.write("\n")
+        file.writelines(linez)
+        file.write("\n")
+        file.writelines(linet)
         file.close()
         i+=1
 
 # Tabular Data
-finished_time = '0.001'
+finished_time = '0.0001'
 solution = ExtAPI.DataModel.Project.Model.Analyses[0].Solution
 solution.Activate()
 Pane=ExtAPI.UserInterface.GetPane(MechanicalPanelEnum.TabularData)
@@ -167,7 +182,7 @@ for analysis in Model.Analyses:
         for time_step in range(1, len(T)):
             print result.Name, "______"+str(time_step)+"_______" 
             if time_step == int(Step[-1]):
-                result.DisplayTime = Quantity(str(float(T[time_step])-0.0001e-05)+" [sec]")
+                result.DisplayTime = Quantity(finished_time+" [sec]")
             else:
                 result.DisplayTime = Quantity(T[time_step]+" [sec]")
             result.EvaluateAllResults()
