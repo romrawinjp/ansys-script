@@ -195,4 +195,4 @@ for analysis in Model.Analyses:
             else:
                 result.DisplayTime = Quantity(T[time_step]+" [sec]")
             result.EvaluateAllResults()
-            result.ExportToTextFile("main_path+ name +"\\"+result.Name+"\\"+str(time_step)+".txt")
+            result.ExportToTextFile("main_path" + name +"\\"+result.Name+"\\"+str(time_step)+".txt")
